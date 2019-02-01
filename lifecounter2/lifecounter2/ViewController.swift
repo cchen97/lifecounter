@@ -72,6 +72,7 @@ class ViewController: UIViewController {
         // displays the lose alert
         if playerCounter[playnb - 1] <= 0 {
             loseLabel.text = "Player " + String(playnb) + " LOSES!"
+             myHistory.append("\nPlayer " + String(playnb) + " LOSES!")
         }
     }
     
