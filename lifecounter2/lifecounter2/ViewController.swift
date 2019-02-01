@@ -14,47 +14,68 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
+    // keeps track of the lifes
     var playerCounter = Array(repeating: 20, count: 8)
+    
     var gameStarted = false
+    
+    // default players when started
     var currentPlayers = 4
+    
+    // history
     var myHistory = [String]()
+    
+    // all 8 player labels
     @IBOutlet var PlayerLabels: [UILabel]!
     
+    // test field to change how much to add
     @IBOutlet weak var addChunksField: UITextField!
+    
+    // player 2 - 8
     @IBOutlet var extraPlayers: [UIStackView]!
     
+    // lose alert label
     @IBOutlet weak var loseLabel: UILabel!
+    
+    // buttons to add/minus players
     @IBOutlet var changePlayerCount: [UIButton]!
     
+    // buttons for add/minus chunks
     @IBOutlet var addChunks: [UIButton]!
     @IBOutlet var minusChunks: [UIButton]!
+    
+    // passes history to the History view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let history = segue.destination as! history
         history.historyText = myHistory
     }
     
+    // adds/minus life
     @IBAction func BtnPressed(_ sender: UIButton) {
         gameStarted = true
-        
+        // hide the add/minus player buttons
         changePlayerCount[0].isHidden = true
         changePlayerCount[1].isHidden = true
-        //print(sender.tag)
+        
+        // counts life
         let playnb = abs(sender.tag / 10)
-        //print(playnb)
         playerCounter[playnb - 1] = playerCounter[playnb - 1] + sender.tag % 10
          PlayerLabels[playnb - 1].text = String(playerCounter[playnb - 1])
+        
+        // history
         if sender.tag % 10 > 0 {
             myHistory.append("\nPlayer " + String(playnb) + " won " + String(sender.tag % 10) + " life")
         } else {
              myHistory.append("\nPlayer " + String(playnb) + " lost " + String(abs(sender.tag % 10)) + " life")
         }
  
+        // displays the lose alert
         if playerCounter[playnb - 1] <= 0 {
             loseLabel.text = "Player " + String(playnb) + " LOSES!"
         }
-        
     }
     
+    // change the add/minus chuncks
     @IBAction func AddChunks(_ sender: UIButton) {
         var j = 1
         for i in addChunks {
@@ -73,7 +94,7 @@ class ViewController: UIViewController {
         }
     }
 
-
+    // adds/minus players
     @IBAction func addPlayer(_ sender: UIButton) {
         if !gameStarted{
             currentPlayers = currentPlayers + sender.tag
@@ -119,7 +140,5 @@ class ViewController: UIViewController {
                 })
             }
         }
-        
-    }
-    
+     }
 }
