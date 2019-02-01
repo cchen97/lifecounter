@@ -62,7 +62,6 @@ class ViewController: UIViewController {
             i.tag = Int(addChunksField.text!) ?? 0
             i.tag  = i.tag + j * 10
             j = j + 1
-            //print(i.tag)
         }
         
         j = 1
